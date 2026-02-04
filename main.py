@@ -1,17 +1,14 @@
 import asyncio
-from dataclasses import dataclass
 from pathlib import Path
 
-from stario import Context, RichTracer, Stario, Writer, asset, at, data
+from stario import Context, RichTracer, Stario, Writer, asset, at, data, JsonTracer
 from stario.html import H1, Body, Button, Div, Head, Html, Meta, P, Script, Title
-from stario.toys import toy_inspector
 from stario.http.router import Router
 
 from watchfiles import run_process
 
 
-def page(*children):
-    """Base HTML page with Datastar."""
+def home_view():
     return Html(
         {"lang": "en"},
         Head(
@@ -23,17 +20,7 @@ def page(*children):
             Script({"type": "module", "src": "/static/" + asset("js/datastar.js")}),
         ),
         Body(
-            {
-                "style": "font-family: system-ui; padding: 2rem; max-width: 600px; margin: 0 auto;"
-            },
-            *children,
         ),
-    )
-
-
-def home_view():
-    return page(
-        toy_inspector()
     )
 
 async def home(c: Context, w: Writer):
@@ -41,22 +28,22 @@ async def home(c: Context, w: Writer):
 
 
 async def main():
-    with RichTracer() as tracer:
+    # with RichTracer() as tracer:
+    with JsonTracer() as tracer:
         app = Stario(tracer)
 
         app.assets("/static", Path(__file__).parent / "static")
 
-        app.get("/*", home_view)
+        app.get("/", home)
 
-        await app.serve(unix_socket="legovh.sock")
+        await app.serve(unix_socket="/run/legovh/legovh.sock")
 
 
 def serve():
     asyncio.run(main())
 
 if __name__ == "__main__":
-    serve()
-    # run_process(
-    #     Path(__file__).parent,
-    #     target=serve
-    # )
+    run_process(
+        Path(__file__).parent,
+        target=serve
+    )
