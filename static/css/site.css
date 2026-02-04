@@ -1,0 +1,50 @@
+@import url('gold.css');
+
+:root {
+	--black: #1c1c1c;
+	--orange: #F3A235;
+	--yellow: #F2CA29
+}
+
+body {
+    background: var(--black);
+    /* font-family: 'slkscr'; */
+}
+
+main {
+    font-family: system-ui;
+	color: var(--yellow);
+    text-align: center;
+}
+
+#donations {
+    grid-auto-flow: column;
+    gap: 2rem;
+    button {
+        font-weight: bold;
+        padding-inline: 8%;
+        cursor: pointer;
+        transition: scale .1s linear;
+        background: darkslategrey;
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+}
+
+#supporters {
+    li {
+        background: linear-gradient(90deg,
+            #b8860b 0%,
+            #daa520 25%,
+            #cd853f 50%,
+            #daa520 75%,
+            #b8860b 100%);
+        background-size: 200% 100%;
+        background-clip: text;
+        color: transparent;
+        font-weight: bold;
+        text-emphasis: "❤️";
+        text-emphasis-position: under;
+    }
+}
