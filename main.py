@@ -46,25 +46,17 @@ async def main():
 
         app.assets("/static", Path(__file__).parent / "static")
 
-        # Routes
-        legovh = Router()
-        legovh.get("/", home_view)
-        mm = Router()
-        mm.get("/", home_view)
+        app.get("/*", home_view)
 
-        # Start server
-        app.host("*.leg.ovh", legovh)
-        app.host("mm.leg.ovh", mm)
-        await app.serve(
-            unix_socket="legovh.sock"
-        )
+        await app.serve(unix_socket="legovh.sock")
 
 
 def serve():
     asyncio.run(main())
 
 if __name__ == "__main__":
-    run_process(
-        Path(__file__).parent,
-        target=serve
-    )
+    serve()
+    # run_process(
+    #     Path(__file__).parent,
+    #     target=serve
+    # )
