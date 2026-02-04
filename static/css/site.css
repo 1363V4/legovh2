@@ -9,19 +9,18 @@
 
 body {
     background: var(--black);
-    /* font-family: 'slkscr'; */
+    font-family: 'slkscr', system-ui;
 }
 
 main {
-    font-family: system-ui;
 	color: var(--yellow);
     text-align: center;
 }
 
 #welcome {
 	color: var(--orange);
-    display: flex;
-	flex-wrap: wrap;
+    display: grid;
+    grid-auto-flow: column;
     gap: 1rem;
     font-weight: bold;
 }
@@ -42,7 +41,7 @@ main {
 }
 
 #supporters {
-    li {
+    ul {
         background: linear-gradient(90deg,
             var(--yellow),
             var(--orange)
@@ -53,5 +52,15 @@ main {
         font-weight: bold;
         text-emphasis: "❤️";
         text-emphasis-position: under;
+        animation: rotate-gradient 6s linear infinite;
+    }
+}
+
+@keyframes rotate-gradient {
+    0% {
+        background: linear-gradient(90deg, var(--yellow), var(--orange));
+    }
+    100% {
+        background: linear-gradient(450deg, var(--yellow), var(--orange));
     }
 }

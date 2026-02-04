@@ -1,8 +1,9 @@
 import asyncio
+from functools import cache
 from pathlib import Path
 
 from stario import Context, RichTracer, Stario, Writer, asset, at, data, JsonTracer
-from stario.html import H1, Body, Button, Div, Head, Html, Meta, P, Script, Title, Link, Main, Button, Span, Progress, A, Ul, Li
+from stario.html import H1, Body, Button, Div, Head, Html, Meta, P, Script, Title, Link, Main, Button, Span, Progress, A, Ul, Li, Img
 from stario.http.router import Router
 
 from watchfiles import run_process
@@ -16,7 +17,7 @@ def home_view():
             Meta(
                 {"name": "viewport", "content": "width=device-width, initial-scale=1"}
             ),
-            Title("The Tao"),
+            Title("leg.ovh"),
             Link({
                 'rel': "icon",
                 'href': f"/static/{asset('img/favicon.ico')}"
@@ -35,7 +36,8 @@ def home_view():
                 Div(
                     {'id': "welcome"},
                     Span("Hello"),
-                    Span("There")
+                    Span("There"),
+                    Span("🌞"),
                 ),
                 Div(
                     Progress(
@@ -45,7 +47,10 @@ def home_view():
                         },
                         "0%"
                     ),
-                    P("text")
+                    P(
+                        {'class': ["gt-s"]},
+                        "500$ left in 2026"
+                    )
                 ),
                 Div(
                     {'id': "donations"},
@@ -54,8 +59,8 @@ def home_view():
                         Button("In EUR")
                     ),
                     A(
-                        {'href': "https://checkout.revolut.com/pay/439edbe5-bda3-4616-aa07-7c2123f5514e"},
-                        Button("In EUR")
+                        {'href': "https://checkout.revolut.com/pay/6cf1abf4-7cf5-46e3-9f05-5287eee0ddd4"},
+                        Button("In USD")
                     ),
                 ),
                 Div(
@@ -66,7 +71,15 @@ def home_view():
                         Li("Michael Spanner"),
                         Li("Michael Spanner"),
                     )
-
+                ),
+                P("Thanks! You're a data star 😉"),
+                Div(
+                    {'id': "reopening"},
+                    Img(
+                        {'src': f"/static/{asset('img/stario.png')}"}
+                    ),
+                    P("GRAND REOPENING!"),
+                    P("Now with added Stario™")
                 )
             )
         ),
