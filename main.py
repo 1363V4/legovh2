@@ -55,7 +55,9 @@ async def main():
         # Start server
         app.host("*.leg.ovh", legovh)
         app.host("mm.leg.ovh", mm)
-        await app.serve(host="127.0.0.1", port=8000)
+        await app.serve(
+            unix_socket="legovh.sock"
+        )
 
 
 def serve():
@@ -63,6 +65,6 @@ def serve():
 
 if __name__ == "__main__":
     run_process(
-        Path(__file__).parent, 
+        Path(__file__).parent,
         target=serve
     )
