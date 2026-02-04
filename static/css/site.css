@@ -1,6 +1,7 @@
 @import url('gold.css');
 
 :root {
+	--m: 2rem;
 	--black: #1c1c1c;
 	--orange: #F3A235;
 	--yellow: #F2CA29
@@ -15,6 +16,14 @@ main {
     font-family: system-ui;
 	color: var(--yellow);
     text-align: center;
+}
+
+#welcome {
+	color: var(--orange);
+    display: flex;
+	flex-wrap: wrap;
+    gap: 1rem;
+    font-weight: bold;
 }
 
 #donations {
@@ -35,11 +44,9 @@ main {
 #supporters {
     li {
         background: linear-gradient(90deg,
-            #b8860b 0%,
-            #daa520 25%,
-            #cd853f 50%,
-            #daa520 75%,
-            #b8860b 100%);
+            var(--yellow),
+            var(--orange)
+        );
         background-size: 200% 100%;
         background-clip: text;
         color: transparent;

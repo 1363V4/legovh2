@@ -48,7 +48,7 @@ def home_view():
                     P("text")
                 ),
                 Div(
-                    {'id': "welcome"},
+                    {'id': "donations"},
                     A(
                         {'href': "https://checkout.revolut.com/pay/439edbe5-bda3-4616-aa07-7c2123f5514e"},
                         Button("In EUR")
@@ -62,7 +62,9 @@ def home_view():
                     {'id': "supporters"},
                     P("😺 Supporters 😺"),
                     Ul(
-                        Li("Michael Spanner")
+                        Li("Michael Spanner"),
+                        Li("Michael Spanner"),
+                        Li("Michael Spanner"),
                     )
 
                 )
