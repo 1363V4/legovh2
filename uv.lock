@@ -97,7 +97,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "stario", specifier = ">=2.1.0" },
+    { name = "stario", specifier = ">=2.2.0" },
     { name = "watchfiles", specifier = ">=1.1.1" },
 ]
 
@@ -146,7 +146,7 @@ wheels = [
 
 [[package]]
 name = "stario"
-version = "2.1.0"
+version = "2.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiofiles" },
@@ -156,9 +156,9 @@ dependencies = [
     { name = "rich" },
     { name = "xxhash" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3b/4e/946fa082293923e60db4e5bd07954560c8dcaf8544a0c98e6d310c34490c/stario-2.1.0.tar.gz", hash = "sha256:c552ec3ab3531ef1b50e3eaa87c6fabbbc8aa7030260c23e13d63f2e85fbe75c", size = 103715, upload-time = "2026-02-03T16:55:16.538Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/29/97/cf579c7969cff8c7f351d0febd9a5090885cadd48c3877b5a544ac8e8d19/stario-2.2.0.tar.gz", hash = "sha256:500ee718063c112bf9a26b6f25421ccfe2bd880c64624011bba235936190cb70", size = 103071, upload-time = "2026-02-09T18:32:29.874Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f5/42/0fb7b80ed119bcfeaa2fac5900f5351688bad71423846dc94cbe912673b6/stario-2.1.0-py3-none-any.whl", hash = "sha256:b59e8ad95352c770ceca370bb0ff6261987e8c62d1d3b92687bbf3f1ff0ec005", size = 119789, upload-time = "2026-02-03T16:55:14.873Z" },
+    { url = "https://files.pythonhosted.org/packages/31/85/043686b39c394539d9bd1e9cb64f692dd94b49b251a44dca7951e9f96cca/stario-2.2.0-py3-none-any.whl", hash = "sha256:1d418bba493662094ae6d544e1a5efef870347ccd3c0a0d7df77f05ed625f4e8", size = 119288, upload-time = "2026-02-09T18:32:27.77Z" },
 ]
 
 [[package]]
