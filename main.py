@@ -3,7 +3,7 @@ from functools import cache
 from pathlib import Path
 
 from stario import Context, RichTracer, Stario, Writer, asset, at, data, JsonTracer
-from stario.html import H1, Body, Button, Div, Head, Html, Meta, P, Script, Title, Link, Main, Button, Span, Progress, A, Ul, Li, Img
+from stario.html import H1, Body, Button, Div, Head, Html, Meta, P, Script, Title, Link, Main, Button, Span, Progress, A, Ul, Li, Img, Hr
 from stario.http.router import Router
 
 from watchfiles import run_process
@@ -32,28 +32,40 @@ def home_view():
             })
         ),
         Body(
+            {'class': ["gc"]},
             Main(
+                {'class': ["gc gm-l gt-l"]},
                 Div(
                     {'id': "welcome"},
+                    {'class': ["gt-xl"]},
                     Span("Hello"),
                     Span("There"),
                     Span("🌞"),
+                ),
+                P(
+                    "Become a supporter of the ",
+                    A(
+                        {'href': "https://www.youtube.com/@louis_sunshine"},
+                        "channel"
+                    ),
+                    "!"
                 ),
                 Div(
                     Progress(
                         {
                             'max': 100,
-                            'value': 0,
+                            'value': 57,
                         },
-                        "0%"
+                        "57%"
                     ),
                     P(
                         {'class': ["gt-s"]},
-                        "500$ left in 2026"
+                        "230$ left in 2026"
                     )
                 ),
                 Div(
                     {'id': "donations"},
+                    {'class': ["gc"]},
                     A(
                         {'href': "https://checkout.revolut.com/pay/439edbe5-bda3-4616-aa07-7c2123f5514e"},
                         Button("In EUR")
@@ -65,21 +77,34 @@ def home_view():
                 ),
                 Div(
                     {'id': "supporters"},
+                    {'class': ["gt-m"]},
                     P("😺 Supporters 😺"),
                     Ul(
                         Li("Michael Spanner"),
-                        Li("Michael Spanner"),
-                        Li("Michael Spanner"),
+                        Li("Ben Croker"),
+                        Li("Delaney Gillilan"),
+                        Li("ndendic"),
+                        Li("Anders Murphy"),
+                        Li("Adam Bobowski"),
+                        Li("C. Gampert"),
+                        Li("Andy G."),
                     )
                 ),
+                Hr(),
                 P("Thanks! You're a data star 😉"),
                 Div(
                     {'id': "reopening"},
+                    {'class': ["gc"]},
                     Img(
                         {'src': f"/static/{asset('img/stario.png')}"}
                     ),
-                    P("GRAND REOPENING!"),
-                    P("Now with added Stario™")
+                    Div(
+                        P("GRAND REOPENING!"),
+                        P(
+                            {'class': ["gt-m"]},
+                            "Now with added Stario™"
+                        )
+                    )
                 )
             )
         ),
