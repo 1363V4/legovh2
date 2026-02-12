@@ -6,8 +6,205 @@ from stario import Context, RichTracer, Stario, Writer, JsonTracer
 from stario.http.router import Router
 
 from watchfiles import run_process
+from stario import asset, at, data
+from stario.html import (
+    A,
+    B,
+    Body,
+    Button,
+    Div,
+    H1,
+    H2,
+    H3,
+    Head,
+    Hr,
+    Html,
+    Img,
+    Li,
+    Link,
+    Main,
+    Meta,
+    P,
+    Script,
+    Span,
+    Style,
+    Title,
+    Ul,
+)
 
-from views import index_view, tao_view
+
+def index_view():
+    return Html(
+        {"lang": "en"},
+        Head(
+            Meta({'charset': "UTF-8"}),
+            Meta(
+                {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+            ),
+            Title("leg.ovh"),
+            Link({
+                'rel': "icon",
+                'href': f"/static/{asset('img/avatar.avif')}"
+            }),
+            Link({
+                'rel': "stylesheet",
+                'href': f"/static/{asset('css/index.css')}"
+            }),
+            Script({
+                'type': "module",
+                'src': f"/static/{asset('js/datastar.js')}"
+            })
+        ),
+        Body(
+            {'class': ["gc"]},
+            Main(
+                {'class': ["gc gm-m gt-l"]},
+                Div(
+                    {'class': ["gg01d gc gt-xl"]},
+                    Img({
+                        'id': "avatar",
+                        'src': f"/static/{asset("/img/avatar.avif")}",
+                        'alt': "it's-a me!"
+                    }),
+                    Div(
+                        {'id': "welcome"},
+                        {'class': ["gc"]},
+                        Span("Hello"),
+                        Span("There"),
+                        Span("🌞"),
+                    )
+                ),
+                H1(
+                    "Welcome to the website of ",
+                    B("Louis Sunshine")
+                ),
+                P(
+                    "I make ",
+                    A(
+                        {'href': "https://www.youtube.com/@louis_sunshine"},
+                        "Youtube videos"
+                    ),
+                    " about ",
+                    A(
+                        {'href': "https://data-star.dev/"},
+                        "Datastar"
+                    )
+                ),
+                P(
+                    {'class': ["gt-m"]},
+                    "Contact: louissnshn @gmail"
+                ),
+                Hr(),
+                H2("My projects"),
+                Div(
+                    {'class': ["project gc gm-m gp-m"]},
+                    Img({
+                        'src': f"/static/{asset("/svg/yinyang.svg")}",
+                        'alt': "tao"
+                    }),
+                    Div(
+                        {'class': ["project-description"]},
+                        H3("The Tao"),
+                        P("Zen programming"),
+                        P("good principles when building with Datastar"),
+                        Button("Play now!")
+                    )
+                ),
+                Hr(),
+                Div(
+                    {'id': "supporters"},
+                    {'class': ["gt-m"]},
+                    P("😺 O.G. Supporters 😺"),
+                    Ul(
+                        Li("Michael Spanner"),
+                        Li("Ben Croker"),
+                        Li("Delaney Gillilan"),
+                        Li("ndendic"),
+                        Li("Anders Murphy"),
+                        Li("Adam Bobowski"),
+                        Li("C. Gampert"),
+                        Li("Andy G."),
+                    )
+                ),
+                Hr(),
+                P("Thanks! You're a data star 😉"),
+                Div(
+                    {'id': "reopening"},
+                    {'class': ["gc"]},
+                    Img(
+                        {'src': f"/static/{asset('img/stario.png')}"}
+                    ),
+                    Div(
+                        P("GRAND REOPENING!"),
+                        P(
+                            {'class': ["gt-m"]},
+                            "Now with added Stario™"
+                        )
+                    )
+                )
+            )
+        ),
+    )
+
+
+async def tao_view(state):
+    reps = int(state['reps'])
+    custom_css = f'''
+:root {{
+    --light: {reps / 100}
+}}
+::view-transition-group(*) {{
+	animation-duration: {2 - 2 * reps / 100}s;
+}}
+    '''
+
+    return Html(
+        {'lang': "en"},
+        Head(
+            Meta({'charset': "UTF-8"}),
+            Meta(
+                {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+            ),
+            Title("The Tao"),
+            Link({
+                'rel': "icon",
+                'href': f"/static/{asset('img/favicon.ico')}"
+            }),
+            Link({
+                'rel': "stylesheet",
+                'href': f"/static/{asset('css/tao.css')}"
+            }),
+            Script({
+                'type': "module",
+                'src': f"/static/{asset('js/datastar.js')}"
+            }),
+            Style(
+                custom_css
+            )
+        ),
+        # That was the head part, very easy
+        Body(
+            {'class': "gc"}, # using 'gc' from our utility CSS gold.css
+            Div(
+                {'id': "container"},
+                H1(state["title"]), # we get the state, we put it here
+                P(state["content"]),
+                Div(
+                    {'id': "arrow-container"},
+                    A(
+                        {'href': state.get("previous")},
+                        "⬅️",
+                    ) if state.get("previous") else P(), # an empty P not to mess up the grid
+                    A(
+                        {'href': state.get("next")},
+                        "➡️",
+                    ) if state.get("next") else None, # None or "" will not get rendered by Stario. Practical!
+                ),
+            )
+        )
+    )
+
+# from views import index_view, tao_view #unsure where to keep that
 
 
 # HANDLERS
@@ -16,7 +213,7 @@ async def index(c: Context, w: Writer):
     w.html(index_view())
 
 async def tao(c: Context, w: Writer):
-    json_database_path = Path(__file__).parent / "data.json" 
+    json_database_path = Path(__file__).parent / "data.json"
     json_database = json.loads(json_database_path.read_text())
 
     reps = c.req.cookies.get('reps', 0)
@@ -32,7 +229,7 @@ async def tao(c: Context, w: Writer):
             html_response = "404 not found (your fault, this dog can fetch)"
             w.html(html_response)
             return
-    
+
     state['reps'] = reps
     html_response = await tao_view(state)
     w.cookie("reps", reps, httponly=True, secure=True)
@@ -41,27 +238,29 @@ async def tao(c: Context, w: Writer):
 # APP
 
 async def main():
-    # with RichTracer() as tracer:
-    with JsonTracer() as tracer:
+    with RichTracer() as tracer:
+    # with JsonTracer() as tracer:
         app = Stario(tracer)
         app.assets("/static", Path(__file__).parent / "static")
 
-        legovh = Router()
-        legovh.get("/*", index)
-        app.host("legovh.com", legovh)
+        leg_router = Router()
+        leg_router.get("/", index)
+        app.host("leg.ovh", leg_router)
 
         tao_router = Router()
         tao_router.get("/*", tao)
-        app.host("tao.legovh.com", tao_router)
+        app.host("tao.leg.ovh", tao_router)
+
+        # app.get("/", index)
 
         await app.serve(unix_socket="/run/legovh/legovh.sock")
         # await app.serve()
-
 
 def serve():
     asyncio.run(main())
 
 if __name__ == "__main__":
+    # serve()
     run_process(
         Path(__file__).parent,
         target=serve

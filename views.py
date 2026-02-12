@@ -164,7 +164,7 @@ async def tao_view(state):
             }),
             Link({
                 'rel': "stylesheet",
-                'href': f"/static/{asset('css/site.css')}"
+                'href': f"/static/{asset('css/tao.css')}"
             }),
             Script({
                 'type': "module",
