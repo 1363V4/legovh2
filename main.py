@@ -12,7 +12,6 @@ from stario.html import (
     A,
     B,
     Body,
-    Button,
     Div,
     H1,
     H2,
@@ -27,10 +26,12 @@ from stario.html import (
     Meta,
     P,
     Script,
+    Source,
     Span,
     Style,
     Title,
     Ul,
+    Video
 )
 
 
@@ -241,7 +242,14 @@ def mclein_view():
             }),
         ),
         Body(
-            {'class': ["gf gc"]},
+            {'class': ["gf gc gz"]},
+            Video(
+                {"autoplay": True, "loop": True, "muted": True, "playsinline": True},
+                Source({
+                    'src': f"/static/{asset('mp4/mclein_bg.mp4')}",
+                    'type': "video/mp4"
+                })
+            ),
             Main(
                 {'class': ["gc gm-m gt-l"]},
                 "In progress"
