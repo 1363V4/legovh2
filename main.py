@@ -240,19 +240,35 @@ def mclein_view():
                 'rel': "stylesheet",
                 'href': f"/static/{asset('css/mclein.css')}"
             }),
+            Script({
+                'type': "module",
+                'src': f"/static/{asset('js/datastar.js')}"
+            }),
         ),
         Body(
             {'class': ["gf gc gz"]},
+            # Div({'id': "video"}),
             Video(
-                {"autoplay": True, "loop": True, "muted": True, "playsinline": True},
+                {'id': "video"},
+                {"autoplay": True, "muted": True, "loop": True, "playsinline": True, "disablePictureInPicture": True},
                 Source({
                     'src': f"/static/{asset('mp4/mclein_bg.mp4')}",
                     'type': "video/mp4"
                 })
             ),
             Main(
-                {'class': ["gc gm-m gt-l"]},
-                "In progress"
+                {'class': ["gc"]},
+                H1(
+                    "MCL31N"
+                ),
+                # P(
+                #     {'id': "tagline"},
+                #     data.on("click", at.get("/video")),
+                #     "Enter"
+                # ),
+                P(
+                    "The future in your hands"
+                ),
             )
         )
     )
@@ -289,6 +305,21 @@ async def tao(c: Context, w: Writer):
 async def mclein(c: Context, w: Writer):
     w.html(mclein_view())
 
+async def video(c, w):
+    w.patch(
+        Video(
+            {'id': "video"},
+            {"autoplay": True, "muted": True, "loop": True, "playsinline": True, "disablePictureInPicture": True},
+            Source({
+                'src': f"/static/{asset('mp4/mclein_bg.mp4')}",
+                'type': "video/mp4"
+            })
+        )
+    )
+    w.patch(
+        P({'id': "tagline"}, "Future is in your hands")
+    )
+
 # APP
 
 async def main():
@@ -308,6 +339,7 @@ async def main():
 
         mclein_router = Router()
         mclein_router.get("/", mclein)
+        mclein_router.get("/video", video)
         mclein_router.assets("/static", Path(__file__).parent / "static")
         app.host("mcle.in", mclein_router)
 
