@@ -226,10 +226,34 @@ async def tao_view(state):
         )
     )
 
+def mclein_view():
+    return Html(
+        {"lang": "en"},
+        Head(
+            Meta({'charset': "UTF-8"}),
+            Meta(
+                {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+            ),
+            Title("McLein"),
+            Link({
+                'rel': "stylesheet",
+                'href': f"/static/{asset('css/mclein.css')}"
+            }),
+        ),
+        Body(
+            {'class': ["gf gc"]},
+            Main(
+                {'class': ["gc gm-m gt-l"]},
+                "In progress"
+            )
+        )
+    )
+
 # HANDLERS
 
 async def index(c: Context, w: Writer):
     w.html(index_view())
+
 
 async def tao(c: Context, w: Writer):
     json_database_path = Path(__file__).parent / "data.json"
@@ -254,6 +278,9 @@ async def tao(c: Context, w: Writer):
     w.cookie("reps", reps, httponly=True, secure=True)
     w.html(html_response)
 
+async def mclein(c: Context, w: Writer):
+    w.html(mclein_view())
+
 # APP
 
 async def main():
@@ -270,6 +297,11 @@ async def main():
         tao_router.get("/*", tao)
         tao_router.assets("/static", Path(__file__).parent / "static")
         app.host("tao.leg.ovh", tao_router)
+
+        mclein_router = Router()
+        mclein_router.get("/", mclein)
+        mclein_router.assets("/static", Path(__file__).parent / "static")
+        app.host("mcle.in", mclein_router)
 
         await app.serve(unix_socket="/run/legovh/legovh.sock")
         # await app.serve()

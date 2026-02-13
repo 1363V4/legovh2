@@ -1,0 +1,22 @@
+@import url('gold.css');
+
+@font-face {
+    font-family: 'slkscr';
+    font-weight: normal;
+    src: url('/static/fonts/slkscr.ttf');
+}
+
+@font-face {
+    font-family: 'slkscrb';
+    font-weight: bold;
+    src: url('/static/fonts/slkscr.ttf');
+}
+
+:root {
+	--black: #1c1c1c;
+}
+
+body {
+    background: var(--black);
+    font-family: 'slkscr', system-ui;
+}
