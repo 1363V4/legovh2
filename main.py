@@ -2,10 +2,11 @@ import json
 import asyncio
 from pathlib import Path
 
+from watchfiles import run_process
+
 from stario import Context, RichTracer, Stario, Writer, JsonTracer
 from stario.http.router import Router
 
-from watchfiles import run_process
 from stario import asset, at, data
 from stario.html import (
     A,
@@ -57,6 +58,8 @@ def index_view():
         ),
         Body(
             {'class': ["gc"]},
+            data.signals({'theme': False}),
+            data.attr({'light': "$theme"}),
             Main(
                 {'class': ["gc gm-m gt-l"]},
                 Div(
@@ -71,7 +74,10 @@ def index_view():
                         {'class': ["gc"]},
                         Span("Hello"),
                         Span("There"),
-                        Span("🌞"),
+                        Span(
+                            data.text("$theme ? '🌕' : '🌞'"),
+                            data.on("click", "$theme = !$theme")
+                        ),
                     )
                 ),
                 H1(
@@ -107,7 +113,11 @@ def index_view():
                         H3("The Tao"),
                         P("Zen programming"),
                         P("good principles when building with Datastar"),
-                        Button("Play now!")
+                        A(
+                            {'class': "button"},
+                            {"href": 'https://tao.leg.ovh/'},
+                            "Play now!"
+                        )
                     )
                 ),
                 Hr(),
@@ -158,6 +168,18 @@ async def tao_view(state):
 }}
     '''
 
+    match (state.get("previous"), state.get("next")):
+        case (None, None):
+            arrow_navigation = "null"
+        case (None, _):
+            arrow_navigation = f"evt.key == 'ArrowRight' ? window.location = '{state['next']}' : null"
+        case (_, None):
+            arrow_navigation = f"evt.key == 'ArrowLeft' ? window.location = '{state['previous']}' : null"
+        case (_, _):
+            arrow_navigation = f"evt.key == 'ArrowLeft' ? window.location = '{state['previous']}' : evt.key == 'ArrowRight' ? window.location = '{state['next']}' : null"
+    if reps == 100:
+        arrow_navigation = "null"
+
     return Html(
         {'lang': "en"},
         Head(
@@ -168,7 +190,7 @@ async def tao_view(state):
             Title("The Tao"),
             Link({
                 'rel': "icon",
-                'href': f"/static/{asset('img/favicon.ico')}"
+                'href': f"/static/{asset('svg/yinyang.svg')}"
             }),
             Link({
                 'rel': "stylesheet",
@@ -182,30 +204,27 @@ async def tao_view(state):
                 custom_css
             )
         ),
-        # That was the head part, very easy
         Body(
-            {'class': "gc"}, # using 'gc' from our utility CSS gold.css
+            {'class': "gc"},
+            data.on("keydown", arrow_navigation, window=True, throttle="1s"),
             Div(
                 {'id': "container"},
-                H1(state["title"]), # we get the state, we put it here
+                H1(state["title"]),
                 P(state["content"]),
                 Div(
                     {'id': "arrow-container"},
                     A(
                         {'href': state.get("previous")},
                         "⬅️",
-                    ) if state.get("previous") else P(), # an empty P not to mess up the grid
+                    ) if state.get("previous") else P(),
                     A(
                         {'href': state.get("next")},
                         "➡️",
-                    ) if state.get("next") else None, # None or "" will not get rendered by Stario. Practical!
+                    ) if state.get("next") else None,
                 ),
             )
         )
     )
-
-# from views import index_view, tao_view #unsure where to keep that
-
 
 # HANDLERS
 
@@ -238,20 +257,19 @@ async def tao(c: Context, w: Writer):
 # APP
 
 async def main():
-    with RichTracer() as tracer:
-    # with JsonTracer() as tracer:
+    # with RichTracer() as tracer:
+    with JsonTracer() as tracer:
         app = Stario(tracer)
-        app.assets("/static", Path(__file__).parent / "static")
 
         leg_router = Router()
         leg_router.get("/", index)
+        leg_router.assets("/static", Path(__file__).parent / "static")
         app.host("leg.ovh", leg_router)
 
         tao_router = Router()
         tao_router.get("/*", tao)
+        tao_router.assets("/static", Path(__file__).parent / "static")
         app.host("tao.leg.ovh", tao_router)
-
-        # app.get("/", index)
 
         await app.serve(unix_socket="/run/legovh/legovh.sock")
         # await app.serve()

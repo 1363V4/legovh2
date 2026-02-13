@@ -40,6 +40,8 @@ body {
 #arrow-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+	/* design on mobile first! */
+    margin-bottom: 3rem;
     /* in 2026, links are emojis */
     /* no decoration, mind empty */
     a {
@@ -58,8 +60,8 @@ body {
 /* bigger! */
 
 h1 {
-    font-size: 5rem;
-    line-height: 5rem;
+    font-size: min(5rem, 15vw);
+    line-height: min(5rem, 15vw);
     font-weight: bold;
 }
 
