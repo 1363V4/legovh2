@@ -19,4 +19,29 @@
 body {
     background: var(--black);
     font-family: 'slkscr', system-ui;
+    filter: invert(1);
+    width: 100dvi;
+    overflow: hidden;
+}
+
+video {
+	width: 100dvi;
+	height: 100dvb;
+	object-fit: cover;
+}
+
+main {
+	mix-blend-mode: overlay;
+	filter: drop-shadow(0px 0px 6px black)
+}
+
+h1 {
+	font-size: 20vw;
+	line-height: 20vw;
+    font-family: 'slkscr', system-ui;
+    font-weight: bold;
+}
+
+h1 + p {
+	font-style: italic
 }
