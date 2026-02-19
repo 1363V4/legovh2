@@ -55,7 +55,11 @@ def index_view():
             Script({
                 'type': "module",
                 'src': f"/static/{asset('js/datastar.js')}"
-            })
+            }),
+            Script({
+                'type': "module",
+                'src': f"/static/{asset('js/index.js')}"
+            }),
         ),
         Body(
             {'class': ["gc"]},
@@ -67,7 +71,7 @@ def index_view():
                     {'class': ["gg01d gc gt-xl"]},
                     Img({
                         'id': "avatar",
-                        'src': f"/static/{asset("/img/avatar.avif")}",
+                        'src': f"/static/{asset("/img/avatar-big.png")}",
                         'alt': "it's-a me!"
                     }),
                     Div(
@@ -95,14 +99,23 @@ def index_view():
                     A(
                         {'href': "https://data-star.dev/"},
                         "Datastar"
-                    )
+                    ),
+                    Img({
+                                            'src': f"/static/{asset("/img/rocket.avif")}",
+                                            'alt': "rocket"
+                                        }),
                 ),
                 P(
                     {'class': ["gt-m"]},
-                    "Contact: louissnshn @gmail"
+                    "Contact me on the Datastar discord!"
                 ),
                 Hr(),
                 H2("My projects"),
+                Img({
+                    'id': "dave",
+                    'src': f"/static/{asset("/img/dave.png")}",
+                    'alt': "dave meme"
+                }),
                 Div(
                     {'class': ["project gc gm-m gp-m"]},
                     Img({
@@ -168,7 +181,6 @@ async def tao_view(state):
 	animation-duration: {2 - 2 * reps / 100}s;
 }}
     '''
-
     match (state.get("previous"), state.get("next")):
         case (None, None):
             arrow_navigation = "null"
@@ -180,7 +192,6 @@ async def tao_view(state):
             arrow_navigation = f"evt.key == 'ArrowLeft' ? window.location = '{state['previous']}' : evt.key == 'ArrowRight' ? window.location = '{state['next']}' : null"
     if reps == 100:
         arrow_navigation = "null"
-
     return Html(
         {'lang': "en"},
         Head(
@@ -207,7 +218,7 @@ async def tao_view(state):
         ),
         Body(
             {'class': "gc"},
-            data.on("keydown", arrow_navigation, window=True, throttle="1s"),
+            data.on("keydown", arrow_navigation, window=True, throttle="500ms"),
             Div(
                 {'id': "container"},
                 H1(state["title"]),
@@ -232,10 +243,17 @@ def mclein_view():
         {"lang": "en"},
         Head(
             Meta({'charset': "UTF-8"}),
-            Meta(
-                {"name": "viewport", "content": "width=device-width, initial-scale=1"}
-            ),
+            Meta({"name": "viewport", "content": "width=device-width, initial-scale=1"}),
+            Meta({"property": "og:title", "content": "MCL31N"}),
+            Meta({"property": "og:description", "content": "THE FUTURE IN YOUR HANDS"}),
+            Meta({"property": "og:url", "content": "https://mcle.in"}),
+            Meta({"property": "og:image", "content": "https://mcle.in/static/img/mclein_card.png"}),
+            Meta({"property": "og:type", "content": "website"}),
             Title("McLein"),
+            Link({
+                'rel': "icon",
+                'href': f"/static/{asset('img/mclein_logo.jpg')}"
+            }),
             Link({
                 'rel': "stylesheet",
                 'href': f"/static/{asset('css/mclein.css')}"
