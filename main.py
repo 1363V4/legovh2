@@ -65,6 +65,12 @@ def index_view():
             {'class': ["gc"]},
             data.signals({'theme': False}),
             data.attr({'light': "$theme"}),
+            Div(
+                {'id': "dialog"},
+                {'class': ["gp-m"]},
+                data.on("avatar", "show(el); setTimeout(() => el.style.opacity = 0, 4000)", window=True),
+                "Wow! Put me down!"
+            ),
             Main(
                 {'class': ["gc gm-m gt-l"]},
                 Div(
@@ -80,6 +86,7 @@ def index_view():
                         Span("Hello"),
                         Span("There"),
                         Span(
+                            {'id': "sun"},
                             data.text("$theme ? '🌕' : '🌞'"),
                             data.on("click", "$theme = !$theme")
                         ),
@@ -111,11 +118,6 @@ def index_view():
                 ),
                 Hr(),
                 H2("My projects"),
-                Img({
-                    'id': "dave",
-                    'src': f"/static/{asset("/img/dave.png")}",
-                    'alt': "dave meme"
-                }),
                 Div(
                     {'class': ["project gc gm-m gp-m"]},
                     Img({
@@ -126,7 +128,7 @@ def index_view():
                         {'class': ["project-description"]},
                         H3("The Tao"),
                         P("Zen programming"),
-                        P("good principles when building with Datastar"),
+                        P("Good principles when building with Datastar"),
                         A(
                             {'class': "button"},
                             {"href": 'https://tao.leg.ovh/'},
@@ -134,11 +136,16 @@ def index_view():
                         )
                     )
                 ),
+                Img({
+                    'id': "dave",
+                    'src': f"/static/{asset("/img/dave.png")}",
+                    'alt': "dave meme"
+                }),
                 Hr(),
                 Div(
                     {'id': "supporters"},
                     {'class': ["gt-m"]},
-                    P("😺 O.G. Supporters 😺"),
+                    H2("😺 Supporters 😺"),
                     Ul(
                         Li("Michael Spanner"),
                         Li("Ben Croker"),
@@ -151,7 +158,7 @@ def index_view():
                     )
                 ),
                 Hr(),
-                P("Thanks! You're a data star 😉"),
+                H2("Thanks! You're a data star 😉"),
                 Div(
                     {'id': "reopening"},
                     {'class': ["gc"]},
@@ -338,6 +345,43 @@ async def video(c, w):
         P({'id': "tagline"}, "Future is in your hands")
     )
 
+async def pape(c,w):
+    w.html(
+        Html(
+            {"lang": "en"},
+            Head(
+                Meta({'charset': "UTF-8"}),
+                Meta(
+                    {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+                ),
+                Title("leg.ovh"),
+                Link({
+                    'rel': "icon",
+                    'href': f"/static/{asset('img/avatar.avif')}"
+                }),
+                Link({
+                    'rel': "stylesheet",
+                    'href': f"/static/{asset('css/wp.css')}"
+                })
+            ),
+            Body(
+                {'class': ["gc gt-xxl"]},
+                Main(
+                    P("L"),
+                    P("O"),
+                    P("U"),
+                    P("I"),
+                    P("S"),
+                    P("S"),
+                    P("N"),
+                    P("S"),
+                    P("H"),
+                    P("N"),
+                )
+            ),
+        )
+    )
+
 # APP
 
 async def main():
@@ -347,6 +391,7 @@ async def main():
 
         leg_router = Router()
         leg_router.get("/", index)
+        leg_router.get("/wp", pape)
         leg_router.assets("/static", Path(__file__).parent / "static")
         app.host("leg.ovh", leg_router)
 

@@ -1,0 +1,62 @@
+@import url('gold.css');
+
+@font-face {
+    font-family: 'slkscr';
+    font-weight: normal;
+    src: url('/static/fonts/slkscr.ttf');
+}
+
+@font-face {
+    font-family: 'firacode';
+    font-weight: normal;
+    src: url('/static/fonts/FiraCode.ttf');
+}
+
+@font-face {
+    font-family: 'lusitana';
+    font-weight: normal;
+    src: url('/static/fonts/Lusitana.ttf');
+}
+
+:root {
+	--nokia-light: #c7f0d8;
+	--nokia-dark: #43523d;
+	--voidglow: #a8ffb5;
+}
+
+body {
+    background: black;
+    color: var(--nokia-dark);
+    color: var(--nokia-light);
+    color: black;
+    font-family: 'slkscr', system-ui;
+    width: 100dvi;
+    height: 100dvb;
+}
+
+main {
+	display: grid;
+	grid-template-rows: repeat(2, 1fr);
+	grid-template-columns: repeat(5, 1fr);
+	gap: 1rem;
+	p {
+		aspect-ratio: 1/1;
+		background: var(--nokia-dark);
+		background: var(--nokia-light);
+		text-align: center;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
