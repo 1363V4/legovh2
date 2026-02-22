@@ -77,7 +77,7 @@ def index_view():
                     {'class': ["gg01d gc gt-xl"]},
                     Img({
                         'id': "avatar",
-                        'src': f"/static/{asset("/img/avatar-big.png")}",
+                        'src': f"/static/{asset("/img/avatar-big-compressed.png")}",
                         'alt': "it's-a me!"
                     }),
                     Div(
