@@ -22,10 +22,11 @@ const animateWords = waapi.animate(words, {
 
 const animateSun = waapi.animate("#sun", {
 	transform: {
-		to: 'scaleX(0.9) scaleY(1.1)'
+		to: 'scaleX(0.95) scaleY(1.1)',
+		duration: 500
 	},
 	alternate: true,
-	duration: 200,
+	duration: 100,
 	ease: spring({ bounce: .35 }),
 	filter: 'drop-shadow(0px 0px 4px var(--yellow))',
 });
@@ -80,7 +81,7 @@ const event = new CustomEvent('avatar', {
 
 // and draggable avatar
 
-createDraggable('#avatar', {
+const avatar = createDraggable('#avatar', {
 	container: 'body',
 	containerPadding: [0, 20, 0, 0],
 	containerFriction: 1,
@@ -93,6 +94,8 @@ createDraggable('#avatar', {
 		wiggle.seek(0);
 	},
 });
+
+console.log(avatar)
 
 // ça marche nickel pour reset l'anim comme ça
 
